@@ -108,43 +108,6 @@ void timTheoTen(struct SinhVien* ds, int slsv) {
 	}
 }
 
-void ghiFile(struct SinhVien* ds, int slsv) {
-	getchar();
-	char fName[26];
-	printf("Nhap ten file: ");
-	gets(fName);
-	FILE* fOut = fopen(fName, "a");
-	int i;
-	for(i = 0; i < slsv; i++) {
-		struct SinhVien sv = ds[i];
-		fprintf(fOut, "%-10d %-10s %-20s %-10s %-10d %-10s %-10.2f %-10.2f %-10.2f %-10.2f\n",
-		sv.ma, sv.hoVaTen.ho, sv.hoVaTen.dem, sv.hoVaTen.ten, sv.tuoi, sv.gioiTinh,
-		sv.diem.toan, sv.diem.van, sv.diem.anh, sv.diem.tbc);
-	}
-	fclose(fOut);
-}
-
-void docFile(struct SinhVien* ds, int* slsv) {
-	FILE* fOut = fopen("SV.txt", "r");
-	int i = 0;
-	if(fOut) {
-		for(;;) {
-			struct SinhVien sv;
-			fscanf(fOut, "%10d %10s %20[^\n] %10s %10d %10s %10f %10f %10f %10f\n",
-			&sv.ma, sv.hoVaTen.ho, sv.hoVaTen.dem, sv.hoVaTen.ten, &sv.tuoi, sv.gioiTinh,
-			&sv.diem.toan, &sv.diem.van, &sv.diem.anh, &sv.diem.tbc);
-			
-			ds[i++] = sv;
-			if(feof(fOut)) { // thoat chuong trinh
-				break;
-			}
-		}
-	}
-	
-	fclose(fOut);
-	*slsv = i;
-}
-
 void hienThiTenCot() {
 	printf("-----------------------------------------------------"
 	"----------------------------------------------------------------\n");
@@ -167,8 +130,6 @@ int main() {
 	struct SinhVien dssv[100];
 	int slsv = 0;
 	int luaChon;
-	
-	docFile(dssv, &slsv);
 	printf("DANH SACH SINH VIEN HIEN THOI:\n");
 	hienThiDSSV(dssv, slsv);
 	int i;
@@ -180,7 +141,6 @@ int main() {
 		printf("\n3. Sap xep theo ten.");
 		printf("\n4. Sap xep theo diem giam dan.");
 		printf("\n5. Tim sinh vien theo ten.");
-		printf("\n6. Ghi thong tin sinh vien ra file.");
 		printf("\n0. Thoat chuong trinh.");
 		printf("\nBan chon ? ");
 		
@@ -214,10 +174,6 @@ int main() {
 				
 			case 5:
 				timTheoTen(dssv, slsv);
-				break;
-				
-			case 6:
-				ghiFile(dssv, slsv);
 				break;
 				
 			default:
