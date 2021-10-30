@@ -11,29 +11,34 @@ struct HoTen {
 	char ten[20];
 };
 
-struct DiemMH {
-	float toan;
-	float van;
-	float anh;
-	float tbc;
+struct DiemSV {
+	float diemQT;
+    float diemCong;
+    float diemTH;
+    float diemLT;
+    float diemTK;  
 };
 
 struct SinhVien {
-	int ma;
+	char ID[12];
 	struct HoTen hoVaTen;
 	int tuoi;
 	char gioiTinh[10];
-	struct DiemMH diem;
+	struct DiemSV diem;
+	char email[31];
 };
 
-void nhapDiem(struct DiemMH* diem) {
-	printf("Toan: ");
-	scanf("%f", &diem->toan);
-	printf("Van: ");
-	scanf("%f", &diem->van);
-	printf("Anh: ");
-	scanf("%f", &diem->anh);
-	diem->tbc = (diem->toan + diem->van + diem->anh) / 3;
+void nhapDiem(struct DiemSV* diem) {
+	printf("DIem thuc hanh: ");
+	scanf("%f", &diem->diemTH);
+	printf("Diem ly thuyet: ");
+	scanf("%f", &diem->diemLT);
+	printf("Diem qua trinh: ");
+	scanf("%f", &diem->diemQT);
+    printf("Diem cong: ");
+    scanf("%d", &diem->diemCong);
+	printf("Diem tong ket: ");
+	diem -> diemTK = (diem -> diemTH + diem -> diemLT + diem -> diemQT + diem-> diemCong) / 4;
 }
 
 void nhapHoTen(struct HoTen* ten) {
@@ -48,21 +53,20 @@ void nhapHoTen(struct HoTen* ten) {
 
 struct SinhVien nhapSV() {
 	struct SinhVien sv;
-	printf("Nhap ma: ");
-	scanf("%d", &sv.ma);
+	printf("Nhap ID sinh vien: ");
+	scanf("%d", &sv.ID);
 	nhapHoTen(&sv.hoVaTen);
-	printf("Tuoi: ");
-	scanf("%d", &sv.tuoi);
 	printf("Gioi tinh: ");
 	scanf("%s", sv.gioiTinh);
 	nhapDiem(&sv.diem);
+    printf("Email cua sinh vien: ");
+	scanf("%s",sv.email);
 	return sv;
 }
 
 void hienThiTTSV(struct SinhVien sv) {
-	printf("%-10d %-10s %-20s %-10s %-10d %-10s %-10.2f %-10.2f %-10.2f %-10.2f\n",
-	sv.ma, sv.hoVaTen.ho, sv.hoVaTen.dem, sv.hoVaTen.ten, sv.tuoi, sv.gioiTinh,
-	sv.diem.toan, sv.diem.van, sv.diem.anh, sv.diem.tbc);
+	printf("%-10s %-20s %-10s %-10d %-10s \n"
+	, sv.hoVaTen.ho, sv.hoVaTen.dem, sv.hoVaTen.ten, sv.tuoi, sv.gioiTinh);
 }
 
 void sapXepTheoTen(struct SinhVien* ds, int slsv) {
@@ -82,7 +86,7 @@ void sapXepTheoDiem(struct SinhVien* ds, int slsv) {
 	int i, j;
 	for(i = 0; i < slsv - 1; i++) {
 		for(j = slsv - 1; j > i; j --) {
-			if(ds[j].diem.tbc > ds[j - 1].diem.tbc) {
+			if(ds[j].diem.diemTK > ds[j - 1].diem.diemTK) {
 				struct SinhVien sv = ds[j];
 				ds[j] = ds[j - 1];
 				ds[j - 1] = sv;
@@ -111,9 +115,9 @@ void timTheoTen(struct SinhVien* ds, int slsv) {
 void hienThiTenCot() {
 	printf("-----------------------------------------------------"
 	"----------------------------------------------------------------\n");
-	printf("%-10s %-10s %-20s %-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", 
-		"Ma SV", "Ho", "Dem", "Ten", "Tuoi", "Gioi Tinh", 
-		"Diem Toan", "Diem Van", "Diem Anh", "Diem TBC");
+	printf("%-5s %-5s %-5s %-5s %-5s %-15s %-15s %-15s %-15s %-5s %-10s\n", 
+		"ID", "Ho", "Dem", "Ten", "Tuoi", "Gioi Tinh", 
+		"Diem qua trinh", "Diem thuc hanh", "Diem li thuyet", "Diem cong", "Diem tong ket");
 }
 
 void hienThiDSSV(struct SinhVien* ds, int slsv) {
