@@ -38,7 +38,7 @@ void nhapDiem(struct DiemSV* diem) {
     printf("Diem cong: ");
     scanf("%d", &diem->diemCong);
 	printf("Diem tong ket: ");
-	diem -> diemTK = (diem -> diemTH + diem -> diemLT + diem -> diemQT + diem-> diemCong) / 4;
+	diem->diemTK = (diem->diemTH + diem->diemLT + diem->diemQT + diem->diemCong) / 4;
 }
 
 void nhapHoTen(struct HoTen* ten) {
@@ -56,17 +56,17 @@ struct SinhVien nhapSV() {
 	printf("Nhap ID sinh vien: ");
 	scanf("%d", &sv.ID);
 	nhapHoTen(&sv.hoVaTen);
+	printf("Tuoi:");
+	scanf("%d", &sv.tuoi);
 	printf("Gioi tinh: ");
-	scanf("%s", sv.gioiTinh);
+	scanf("%s", &sv.gioiTinh);
 	nhapDiem(&sv.diem);
-    printf("Email cua sinh vien: ");
-	scanf("%s",sv.email);
 	return sv;
 }
 
 void hienThiTTSV(struct SinhVien sv) {
-	printf("%-10s %-20s %-10s %-10d %-10s \n"
-	, sv.hoVaTen.ho, sv.hoVaTen.dem, sv.hoVaTen.ten, sv.tuoi, sv.gioiTinh);
+	printf("%-5s %-5s %-8s %-5s %-5s %-10s %-15s %-15s %-15s \n"
+	,sv.ID, sv.hoVaTen.ho, sv.hoVaTen.dem, sv.hoVaTen.ten, sv.tuoi, sv.gioiTinh);
 }
 
 void sapXepTheoTen(struct SinhVien* ds, int slsv) {
@@ -114,9 +114,9 @@ void timTheoTen(struct SinhVien* ds, int slsv) {
 
 void hienThiTenCot() {
 	printf("-----------------------------------------------------"
-	"----------------------------------------------------------------\n");
-	printf("%-5s %-5s %-5s %-5s %-5s %-15s %-15s %-15s %-15s %-5s %-10s\n", 
-		"ID", "Ho", "Dem", "Ten", "Tuoi", "Gioi Tinh", 
+	"---------------------------------------------------------------------\n");
+	printf("%-5s %-5s %-8s %-5s %-5s %-10s %-15s %-15s %-15s %-10s %-10s\n", 
+		"ID", "Ho", "Tendem", "Ten", "Tuoi", "Gioi Tinh", 
 		"Diem qua trinh", "Diem thuc hanh", "Diem li thuyet", "Diem cong", "Diem tong ket");
 }
 
@@ -127,7 +127,7 @@ void hienThiDSSV(struct SinhVien* ds, int slsv) {
 		hienThiTTSV(ds[i]);
 	}
 	printf("-----------------------------------------------------"
-	"----------------------------------------------------------------\n");
+	"---------------------------------------------------------------------\n");
 }
 
 int main() {
@@ -146,7 +146,7 @@ int main() {
 		printf("\n4. Sap xep theo diem giam dan.");
 		printf("\n5. Tim sinh vien theo ten.");
 		printf("\n0. Thoat chuong trinh.");
-		printf("\nBan chon ? ");
+		printf("\nVui long chon yeu cau : ");
 		
 		scanf("%d", &luaChon);
 		struct SinhVien sv;
